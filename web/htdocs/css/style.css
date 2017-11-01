@@ -1,0 +1,182 @@
+/* CSS for Page Layout */
+/* =================== */
+
+body {
+  background-color: #e5e5e5;
+  font-family: Arial, Verdana, sans-serif;
+}
+
+
+div.container {
+  border-radius: 5px;
+  width: 100%;
+  border: 0px;
+}
+
+
+header {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  color: black;
+}
+
+
+nav {
+  background-color: black;
+  border-radius: 5px;
+  padding: 5px;
+  font-weight: bold;
+}
+nav li a:hover {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  color: black;
+}
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+nav ul a {
+  text-decoration: none;
+}
+nav li {
+  float: left;
+}
+nav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  padding-right: 20px;
+  padding-left: 20px;
+  text-decoration: none;
+}
+
+
+side {
+  background-color: white;
+  border-radius: 5px;
+  float: left;
+  margin-left: 0px;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  padding: 1em;
+  overflow: hidden;
+}
+side li a:hover {
+  background-color: orange;
+  border-radius: 5px;
+  color: black;
+}
+side ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+side ul a {
+  text-decoration: none;
+}
+sided li {
+  float: left;
+}
+side li a {
+  display: block;
+  color: black;
+  text-align: left;
+  padding: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  text-decoration: none;
+}
+
+
+article {
+  background-color: white;
+  border-radius: 5px;
+  margin-left: 0px;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  padding: 1em;
+  overflow: hidden;
+}
+
+
+footer {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  padding: 1em;
+  color: black;
+  color: black;
+  text-align: right;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+
+/* CSS for All Tables */
+/* ================== */
+#results {
+  border-collapse: collapse;
+}
+
+#results th {
+  background-color: #f5f5f5;
+  border: 1px solid lightgrey;
+	
+}
+
+#results td {
+  border: 1px solid lightgrey;
+}
+
+#results tr:hover {
+  background-color: orange;
+}
+
+
+/* CSS for Sortable Table */
+/* ====================== */
+table.tablesorter thead tr .header {
+  background-image: url(/webstuff/html/images/bg.png);
+  background-repeat: no-repeat;
+  background-position: center right;
+  cursor: pointer;
+}
+table.tablesorter thead tr .headerSortUp {
+  background-image: url(/webstuff/html/images/asc.png);
+}
+table.tablesorter thead tr .headerSortDown {
+  background-image: url(/webstuff/html/images/desc.png);
+}
+
+
+
+/* Style for Page Header */
+/* ===================== */
+h5 {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight : 600;
+  font-size : 24px;
+  color : #000;
+vertical-align: top;
+}
+.headleft {
+  float: left;
+  margin-left: 5px;
+}
+.headright {
+  float: right;
+  margin-right: 5px;
+  
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+
+}
