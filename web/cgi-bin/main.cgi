@@ -1,4 +1,4 @@
-#!c:/perl64/bin/perl.exe
+#!perl
 use POSIX;
 #########################################################################
 # Main Web Page script

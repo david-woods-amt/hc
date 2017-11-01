@@ -1,4 +1,4 @@
-#!c:/perl/bin/perl.exe
+#!perl
 
 print "Content-Type: text/html\n\n";
 print "<title>House Log File</title>\n";
