@@ -21,9 +21,9 @@ class Debug ():
 	if isWin():
 		logfolder="C:\NewHomeControl\Scripts\logs"
 	else:
-		logfolder="./logs"
+		logfolder="/root/hc/scripts/logs"
 		
-	logfile=logfolder+"\log.txt"
+	logfile=logfolder+"/log.txt"
 
 
 	###############################################################################

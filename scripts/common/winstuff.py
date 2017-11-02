@@ -100,8 +100,10 @@ class Winstuff ():
 		# ==============================
 		try:
 			aReg = ConnectRegistry(None,HKEY_LOCAL_MACHINE)
+			debug.Info ("    Connected to Registry")
 
 			aKey = OpenKey(aReg, r"Hardware\DEVICEMAP\SERIALCOMM")
+			debug.Info ("    Read key")
 			for i in range(1024):                                           
 				try:
 					name,value,t = EnumValue(aKey,i)

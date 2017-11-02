@@ -1,11 +1,9 @@
 #   !c:\python27\python.exe
 
 
-
 ###############################################################################
 # Imports
 ###############################################################################
-
 
 # Python Imports
 # ==============
@@ -34,6 +32,11 @@ else:
 # Constants
 ###############################################################################
 
+# HTML Formatting
+# ===============
+TDC = "<td align=\"center\" valign=\"middle\" >"
+
+
 # Mobile Phone Globals
 # ====================
 #sender = "+447919404812"
@@ -42,20 +45,22 @@ else:
 
 # Timer Array Constants
 # =====================
-NUMBEROFZWAVEDEVICES=11
+NUMBEROFZWAVEDEVICES=3
 HEATING=0
 
-LIGHT1=1
-LIGHT2=2
-LIGHT3=3
-LIGHT4=4
-LIGHT5=5
+SOCKET1=1
+SOCKET2=2
+# SOCKET3=3
+# SOCKET4=4
+# SOCKET5=5
 
-SOCKET1=6
-SOCKET2=7
-SOCKET3=8
-SOCKET4=9
-SOCKET5=10
+# LIGHT1=6
+# LIGHT2=7
+# LIGHT3=8
+# LIGHT4=9
+# LIGHT5=10
+
+
 
 # Laptop Battery
 # ==============
@@ -138,7 +143,7 @@ BOOSTELAPSEDTIME=12
 BOOSTLENGTH=13
 STATE=14
 OLDSTATE=15
-#DIMMERCONTROL=16
+DIMMERCONTROL=16
 ZWAVEPORT=17
 ZWAVETYPE=18
 
@@ -165,48 +170,51 @@ for x in xrange(NUMBEROFZWAVEDEVICES):
 # ================================
 timerdata[HEATING][NAME]="Central Heating"
 timerdata[HEATING][BOOSTLENGTH]=15 #3600
-timerdata[HEATING][ZWAVEPORT]="\x03"
+timerdata[HEATING][ZWAVEPORT]="\x05"
 timerdata[HEATING][ZWAVETYPE]="HEATING"
 
-timerdata[LIGHT1][NAME]="Main Bedroom Light"
-timerdata[LIGHT1][ZWAVEPORT]="\x02"
-timerdata[LIGHT1][ZWAVETYPE]="LIGHT"
+# timerdata[LIGHT1][NAME]="Main Bedroom Light"
+# timerdata[LIGHT1][BOOSTLENGTH]=15 #3600
+# timerdata[LIGHT1][ZWAVEPORT]="\x02"
+# timerdata[LIGHT1][ZWAVETYPE]="LIGHT"
 
-timerdata[LIGHT2][NAME]="Spare Bedroom Light"
-timerdata[LIGHT2][ZWAVEPORT]="\x06"
-timerdata[LIGHT2][ZWAVETYPE]="LIGHT"
+# timerdata[LIGHT2][NAME]="Spare Bedroom Light"
+# timerdata[LIGHT2][ZWAVEPORT]="\x03"
+# timerdata[LIGHT2][ZWAVETYPE]="LIGHT"
 
-timerdata[LIGHT3][NAME]="Sitting Room Light"
-timerdata[LIGHT3][ZWAVEPORT]="\x06"
-timerdata[LIGHT3][ZWAVETYPE]="LIGHT"
+# timerdata[LIGHT3][NAME]="Sitting Room Light"
+# timerdata[LIGHT3][ZWAVEPORT]="\x06"
+# timerdata[LIGHT3][ZWAVETYPE]="LIGHT"
 
-timerdata[LIGHT4][NAME]="Dining Room Light"
-timerdata[LIGHT4][ZWAVEPORT]="\x06"
-timerdata[LIGHT4][ZWAVETYPE]="LIGHT"
+# timerdata[LIGHT4][NAME]="Dining Room Light"
+# timerdata[LIGHT4][ZWAVEPORT]="\x06"
+# timerdata[LIGHT4][ZWAVETYPE]="LIGHT"
 
-timerdata[LIGHT5][NAME]="Kitchen Light"
-timerdata[LIGHT5][ZWAVEPORT]="\x07"
-timerdata[LIGHT5][ZWAVETYPE]="LIGHT"
+# timerdata[LIGHT5][NAME]="Kitchen Light"
+# timerdata[LIGHT5][ZWAVEPORT]="\x07"
+# timerdata[LIGHT5][ZWAVETYPE]="LIGHT"
 
 timerdata[SOCKET1][NAME]="Main Bedroom Socket"
-timerdata[SOCKET1][ZWAVEPORT]="\x06"
+timerdata[SOCKET1][BOOSTLENGTH]=15 #3600
+timerdata[SOCKET1][ZWAVEPORT]="\x02"
 timerdata[SOCKET1][ZWAVETYPE]="SOCKET"
 
 timerdata[SOCKET2][NAME]="Spare Bedroom Socket"
-timerdata[SOCKET2][ZWAVEPORT]="\x06"
+timerdata[SOCKET2][BOOSTLENGTH]=15 #3600
+timerdata[SOCKET2][ZWAVEPORT]="\x03"
 timerdata[SOCKET2][ZWAVETYPE]="SOCKET"
 
-timerdata[SOCKET3][NAME]="Sitting Room Socket"
-timerdata[SOCKET3][ZWAVEPORT]="\x06"
-timerdata[SOCKET3][ZWAVETYPE]="SOCKET"
+# timerdata[SOCKET3][NAME]="Sitting Room Socket"
+# timerdata[SOCKET3][ZWAVEPORT]="\x06"
+# timerdata[SOCKET3][ZWAVETYPE]="SOCKET"
 
-timerdata[SOCKET4][NAME]="Dining Room Socket"
-timerdata[SOCKET4][ZWAVEPORT]="\x06"
-timerdata[SOCKET4][ZWAVETYPE]="SOCKET"
+# timerdata[SOCKET4][NAME]="Dining Room Socket"
+# timerdata[SOCKET4][ZWAVEPORT]="\x06"
+# timerdata[SOCKET4][ZWAVETYPE]="SOCKET"
 
-timerdata[SOCKET5][NAME]="Kitchen Socket"
-timerdata[SOCKET5][ZWAVEPORT]="\x07"
-timerdata[SOCKET5][ZWAVETYPE]="SOCKET"
+# timerdata[SOCKET5][NAME]="Kitchen Socket"
+# timerdata[SOCKET5][ZWAVEPORT]="\x07"
+# timerdata[SOCKET5][ZWAVETYPE]="SOCKET"
 
 
 
@@ -237,39 +245,6 @@ def routine_check_on_zwave():
 	debug.Info1("---	routine_check_on_zwave ---")	
 		
 
-
-
-
-
-
-
-###############################################################################
-#def routine_check_on_phone():
-###############################################################################
-#
-#
-#
-###############################################################################
-#
-#	global phone
-#	global t
-#	
-#	debug=Debug()
-#	debug.Info1("+++	routine_check_on_phone +++")
-#	
-#	if phone.isActive() == True:
-#		if (t.second==15):
-#			debug.Info("Scheduled Check on Phone")
-#
-#			(batt,error) = phone.get_battery()
-#			#(signal,error) = phone.get_signal()
-#			#(imei,error) = phone.get_imei()
-#			
-#			#debug.Info("IMEI ["+str(imei)+"] - Battery ["+str(batt)+"] - Signal ["+str(signal)+"]")
-#			debug.Info ("Battery ["+str(batt)+"]")
-#	
-#	debug.Info1("--- routine_check_on_phone ---")
-#		
 
 
 
@@ -309,52 +284,6 @@ def process_keyboard_command(key):
 
 
 
-
-
-
-###############################################################################
-#def check_to_restart_phone():
-###############################################################################
-#
-#
-#
-###############################################################################
-#
-#	global phone
-#	global t
-#	
-#	debug=Debug()
-#	debug.Info1("+++	check_to_restart_phone +++")
-#	
-#	# If no Phone, restart serial port
-#	# ======================================
-#	if phone.isActive() == False:
-#		if (t.second==5):
-#			debug.Info("Trying to restart phone")
-#			time.sleep(1)
-#			phone.init_phone()
-#			if phone.isResponding()==True:
-#				debug.Info("Restarted OK")
-#			else:
-#				debug.Info("Failed to restart")
-#
-#	debug.Info1("---	check_to_restart_phone ---")
-#
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ###############################################################################
 def check_to_restart_zwave(key=0):
 ###############################################################################
@@ -385,35 +314,6 @@ def check_to_restart_zwave(key=0):
 	
 	
 
-###############################################################################
-def check_laptop_power():		
-###############################################################################
-#
-#
-#
-###############################################################################
-
-	global batteryValue
-	global batteryCharge
-	global batteryText
-	global batteryAlarm
-	global batteryAlarmCutoff
-	
-	global winstuff
-	
-	debug=Debug()
-	debug.Info1("+++ check_laptop_power +++")
-	
-	# Check on Laptop Power
-	# ======================
-	(batteryValue, batteryCharge, batteryText)=winstuff.getLaptopPower()
-	if batteryCharge < batteryAlarmCutoff:
-		batteryAlarm=1
-	else:
-		batteryAlarm=0
-
-	debug.Info1("--- check_laptop_power ---")
-	
 
 
 	
@@ -466,12 +366,12 @@ def button (page, function, command, label, name):
 	debug=Debug()
 	debug.Info1("+++ button +++")
 	
-	line = "\n\n"
+	line = "\n"
 	
 	line += "<form id='sampleform' method='get' action='"+page+"?request="+command+"'>\n"
 ##	line += "	<input type='hidden' name='type' value='"+function+"'>\n"
 	line += "	<input type='hidden' name='command' value='"+command+"'>\n"
-	line += "	<input type='submit' class='button' name='Submit' value='"+label+"'\n"
+	line += "	<input type='submit' class='btn' name='Submit' value='"+label+"'"
 	
 
 	if name == "Disabled":
@@ -481,65 +381,124 @@ def button (page, function, command, label, name):
 	if name != "":
 		line += "	<input type='hidden' name='name' value='"+name+"' />\n"
 		
-	line += "</form>\n\n\n"
+	line += "</form>\n"
 	
 	debug.Info1("--- button ---")
 	
 	return line
 			
 
+
+	
 ###############################################################################
-#def status_string_sms():
+def status_string_helper(what, display, summary):
 ###############################################################################
 # Create general status string
 #
-# Returns SMS formatted status string
+# Returns HTML/Email formatted status string
 #
 ###############################################################################
-#
-#	global zwave
+	
+	global zwave
 #	global phone
-#	global sock
-#	global timerdata
-#
-#	debug=Debug()
-#	debug.Info("+++ status_string_sms +++")
-#
-#	cmd = ""
-#		
-#	# Get the time of day
-#	cmd += time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime()) + " "
-#		
-#	# ERRORS and WARNINGS
-#	# ===================
-#	if zwave.isActive() == False:
-#		cmd += "ERROR: Z-Wave not Active! "
-#	if phone.isActive() == False:
-#		cmd += "ERROR: Phone not Active! "
-#	if zwave.isResponding() == False:
-#		cmd += "WARNING: Z-Wave is not responding! "
-#	if phone.isResponding() == False:
-#		cmd += "WARNING: Phone is not responding! "
-#
-#
-#	for device in xrange(NUMBEROFZWAVEDEVICES):
-#		cmd += timerdata[device][NAME].upper()+" "
-#		cmd += "Power["+format_status(timerdata[device][POWER],"")+"] "
-#		cmd += "Timer["+format_status(timerdata[device][TIMER],"")+"] "
-#		cmd += "Boost["+format_status(timerdata[device][BOOST],"")+"] "
-#		cmd += "State["+format_status(timerdata[device][STATE],"")+"] "
-#
-#
-#	addr=sock.get_ip_address()
-#	if addr:
-#		cmd += str(" Server Address is http://"+addr+"/hc/index.jsp")
-#						
-#	debug.Info("--- status_string_sms ---")
-#	return cmd
-#	
+	global sock
+	global winstuff
+	global timerdata
 	
+	global batteryAlarm
 	
+	format="html"
 	
+	ret=""
+	
+	if (summary == 1):
+		ret += "<br><a class=\"heading\" href=\"/cgi-bin/main.cgi?command=STATUS-"+ what +"-ALL\"> "+ display +" </a> <br>"
+	
+	ret += "<br><table width=\"100%\" id=\"results\" >\n"
+	ret += "<tr> <th width=\"40%\" >Area</th> <th>Power</th> <th>Timer</th>  <th>Boost</th> <th>State</th>"
+	if (summary == 0):
+		ret += "<th colspan=\"3\">Controls </th>"
+	ret += "</tr>\n"
+	
+	for device in xrange(NUMBEROFZWAVEDEVICES):
+		if timerdata[device][ZWAVETYPE] == what:
+			
+			# Do an actual read
+			(timerdata[device][STATE],error) = zwave.get_node(timerdata[device][ZWAVEPORT], timerdata[device][ZWAVETYPE])
+			
+			ret += "<tr>"
+			ret += TDC + timerdata[device][NAME]+"</td>"
+			ret += TDC + format_status(timerdata[device][POWER],format)+"</td>"
+			ret += TDC + format_status(timerdata[device][TIMER],format)+"</td>"
+			
+			if what == "HEATING" or what == "SOCKET":
+				ret += TDC + format_status(timerdata[device][BOOST],format)+"</td>"
+			
+			if zwave.isActive()!=True or zwave.isResponding()!=True:
+				ret += TDC + "State[UNKNOWN]</td>"
+			else:
+				ret += TDC + format_status(timerdata[device][STATE],format)+"<br>"
+				
+				if what == "HEATING" or what == "SOCKET":
+					if timerdata[device][BOOST] == 1:
+						x = timerdata[device][BOOSTLENGTH] - timerdata[device][BOOSTELAPSEDTIME]
+						x=round(x, 1)
+						if x > 60:
+							x=x/60
+							x=round(x, 1)
+							ret += "Remaining ["+str(x)+"] (minutes)"
+						else:
+							ret += "Remaining ["+str(x)+"] (seconds)"
+				ret += "</td>"
+			
+
+			if (summary == 0):
+	
+				# Power Button
+				#if timerdata[device][POWER]==1:
+				disabled=""
+				#else:
+				#	disabled="Disabled"
+				ret += TDC + button("main.cgi", what, "POWER-" + what + "-" + str(device), "Power Off", disabled) + "</td>"						
+
+				# Timer Button
+				if timerdata[device][TIMER]==0:
+					label="On"
+				else:
+					label="Off"
+				ret += TDC + button("main.cgi", what, "TIMER-" + what + "-" + str(device), "Timer "+label, "") + "</td>"				
+
+				# Boost Button
+				if what == "HEATING" or what == "SOCKET":
+					if timerdata[device][BOOST]==0:
+						label="On"
+					else:
+						label="Off"
+					ret += TDC + button("main.cgi", what, "BOOST-" + what + "-" + str(device), "Boost "+label, "") + "</td>"
+				
+				
+		ret += "</tr>"
+	ret += "</table>"
+	
+	if (summary == 0):
+		ret += "<br>"
+		ret += "<table>"
+		
+		ret += TDC + button("main.cgi", what, "STATUS-" + what + "-ALL", "Refresh Screen for " + what + " Status", "") + "</td>"
+		
+		
+		# Get Timer Button
+		ret += TDC + button("main.cgi", what, "GETTIMES-" + what + "-" + str(device), "Get Timer Values", timerdata[device][NAME] ) + "</td>"
+
+		if what == "HEATING" or what == "SOCKET":
+			# Get Boost Button
+			ret += TDC + button("main.cgi", what, "GETBOOST-" + what + "-" + str(device), "Get Boost Value", timerdata[device][NAME] ) + "</td>"
+		ret += "</table>"
+
+	return ret
+
+
+
 	
 
 
@@ -572,245 +531,117 @@ def status_string(what, format):
 		
 		# ERRORS and WARNINGS
 		# ===================
-		if format=="html":
-			cmd += "<article>"
+		errors=""
 		if zwave.isActive() == False:
-			cmd += "<b>ERROR: Z-Wave is not working correctly...cannot action heating! </b><br>"
+			errors += "<b>ERROR: Z-Wave is not working correctly...cannot action heating! </b><br>"
 ###		if phone.isActive() == False:
 ###			cmd += "<b>ERROR: Phone is not working correctly...cannot process SMS! </b><br>"
 		if zwave.isResponding() == False:
-			cmd += "<b>WARNING: Z-Wave is not responding...cannot action heating! </b><br>"
+			errors += "<b>WARNING: Z-Wave is not responding...cannot action heating! </b><br>"
 ###		if phone.isResponding() == False:
 ###			cmd += "<b>WARNING: Phone is not responding...cannot process SMS! </b><br>"
-		if format=="html":
+		if errors:
+			cmd += "<article>"		
+			cmd += errors
 			cmd += "</article>"
 
+		if (what == "ALL"):
+			summary = 1
+		else:
+			summary = 0
+		
 		
 		# Gather Status for ALL Heating ZWAVE Devices
 		# ===========================================
-		#
 		if (what == "ALL") or (what == "HEATING"):
-
-			#cmd += "<hr>"
-			if format=="html":
-				cmd += "<h2>Heating</h2>\n"
-			
-			if (what != "ALL"):
-				if format=="html":
-					#cmd+=button("main.cgi", "heating", "STATUS-HEATING-ALL", "Update Heating Status", "")
-					cmd+=button("main.cgi", "heating", "STATUS-ALL-1", "Update All Status", "")
-			
-			cmd += "<table id=\"results\" >\n"
-			cmd += "<tr> <th>Area</th> <th>Power</th> <th>Timer</th>  <th>Boost</th> <th>State</th>"
-			if (what != "ALL"):
-				cmd += "<th colspan=\"5\">Controls </th>"
-			cmd += "</tr>\n"
-			
-			for device in xrange(NUMBEROFZWAVEDEVICES):
-
-				if timerdata[device][ZWAVETYPE]=="HEATING":
-					cmd += "<tr>"
-					cmd += "<td>"+timerdata[device][NAME]+"</td>"
-					cmd += "<td>"+format_status(timerdata[device][POWER],format)+"</td>"
-					cmd += "<td>"+format_status(timerdata[device][TIMER],format)+"</td>"
-					cmd += "<td>"+format_status(timerdata[device][BOOST],format)+"</td>"
-					
-
-					
-					if timerdata[device][BOOST] == 1:
-						x = timerdata[device][BOOSTLENGTH] - timerdata[device][BOOSTELAPSEDTIME]
-						x=round(x, 1)
-						if x > 60:
-							x=x/60
-							x=round(x, 1)
-							cmd += "<td>Boost Remaining ["+str(x)+"] (minutes)</td>"
-						else:
-							cmd += "<td>Boost Remaining ["+str(x)+"] (seconds)</td>"
-						
-						
-					# Do an actual read
-					(timerdata[device][STATE],error) = zwave.get_node(timerdata[device][ZWAVEPORT], timerdata[device][ZWAVETYPE])
-
-					if zwave.isActive()!=True or zwave.isResponding()!=True:
-						cmd += "<td>State[UNKNOWN]</td>"
-					else:
-						cmd += "<td>State["+format_status(timerdata[device][STATE],format)+"]</td>"
-					
-					
-					if format=="html":
-						if (what != "ALL"):
-							#cmd += "<table width = \"100%\"><tr><td>"
-							cmd += "<td>"
-
-							# Power Button
-							# ============
-							if timerdata[device][POWER]==1:
-								disabled=""
-							else:
-								disabled="Disabled"
-							cmd += button("main.cgi", "heating", "POWER-HEATING-"+str(device), "Power Off", disabled)
-							cmd += "</td><td>"						
-
-							# Timer Button
-							# ============
-							if timerdata[device][TIMER]==0:
-								label="On"
-							else:
-								label="Off"
-							cmd += button("main.cgi", "heating", "TIMER-HEATING-"+str(device), "Timer "+label, "")
-							cmd += "</td><td>"				
-
-							# Boost Button
-							# ============
-							if timerdata[device][BOOST]==0:
-								label="On"
-							else:
-								label="Off"
-							cmd += button("main.cgi", "heating", "BOOST-HEATING-"+str(device), "Boost "+label, "")
-
-							# Get Timer Button
-							# ================
-							cmd += "</td><td>"
-							cmd += button("main.cgi", "heating", "GETTIMES-HEATING-"+str(device), "Get Timer Values", timerdata[device][NAME] )
-							
-							
-							# Get Boost Button
-							# ================
-							cmd += "</td><td>"
-							cmd += button("main.cgi", "heating", "GETBOOST-HEATING-"+str(device), "Get Boost Value", timerdata[device][NAME] )
-							
-							
-							#cmd += "</td></tr></table>"
-					cmd += "</tr>"
-					
-			if format=="html":
-				cmd += "</table>"
-
+			cmd += status_string_helper("HEATING", "Heating", summary)
 	
+
+		# Gather Status for ALL Socket ZWAVE Devices
+		# ==========================================
+		if (what == "ALL") or (what == "SOCKET"):
+			cmd += status_string_helper("SOCKET", "Socket",  summary)
+			
 			
 		# Gather Status for ALL Lighting ZWAVE Devices
 		# ============================================
 		if (what == "ALL") or (what == "LIGHT"):
-		
-			if format=="html":
-				cmd += "<h2>Lights</h2>\n"
-				
-				if (what != "ALL"):
-					cmd+=button("main.cgi", "light", "STATUS-LIGHT-ALL", "Update Light Status", "")
-			
-				cmd += "<table id=\"results\" >\n"
-				cmd += "<tr> <th>Area</th> <th>Power</th> <th>Timer</th>  <th>State</th>"
-				if (what != "ALL"):
-					cmd += "<th colspan=\"5\">Controls </th>"
-				cmd += "</tr>\n"
-				
-			
-			for device in xrange(NUMBEROFZWAVEDEVICES):
+			cmd += status_string_helper("LIGHTS", "Lights", summary)
 
-				if timerdata[device][ZWAVETYPE]=="LIGHT":
-					
-					# Do an actual read
-					(timerdata[device][STATE],error) = zwave.get_node(timerdata[device][ZWAVEPORT], timerdata[device][ZWAVETYPE])
-					
-					# As Dimmers take a while to react, maybe tweak the power setting
-					if timerdata[device][STATE]>0:
-						timerdata[device][POWER]=1
-					else:
-						timerdata[device][POWER]=0
-					
-					cmd += "<tr>"
-					cmd += "<td>"+timerdata[device][NAME]+"</td>"
-					cmd += "<td>"+format_status(timerdata[device][POWER],format)+"</td>"
-					cmd += "<td>"+format_status(timerdata[device][TIMER],format)+"</td>"
-					#cmd += " Dimmer Control["+format_status(timerdata[device][DIMMERCONTROL],format)+"]"
-								
-					if zwave.isActive()!=True or zwave.isResponding()!=True:
-						cmd += "<td>[UNKNOWN]</td>"
-					else:
-						cmd += "<td>"+format_status(timerdata[device][STATE],format)+"</td>"		
-					
-									
-					if format=="html":
-						if (what != "ALL"):
-							
-							# Power Button
-							# ============
-							if timerdata[device][POWER]==1:
-								disabled=""
-							else:
-								disabled="Disabled"
-							cmd += "<td>"+button("main.cgi", "light", "POWER-LIGHT-"+str(device), "Power Off", disabled)+"</td>"
-							
-							# Timer Button
-							# ============
-							if timerdata[device][TIMER]==0:
-								label="On"
-							else:
-								label="Off"
-							cmd += "<td>"+button("main.cgi", "light", "TIMER-LIGHT-"+str(device), "Timer "+label, "")+"</td>"
-							
-							# Dimmer Button
-							# =============
-							cmd += "<td>"+button("main.cgi", "light", "DIMMERUP-LIGHT-"+str(device), "Dimmer Up", "")+"</td>"
-							cmd += "<td>"+button("main.cgi", "light", "DIMMERDOWN-LIGHT-"+str(device), "Dimmer Down", "")+"</td>"
-							
-							# Get Times Button
-							# ================
-							cmd += "<td>"+button("timer.jsp", "light", "GETTIMES-LIGHT-"+str(device), "Get Timer Values", timerdata[device][NAME] )+"</td>"
-							
-							cmd += "</tr>"
-							
-			cmd += "</table>"
-					
+			
+#			if format=="html":
+#				cmd += "<h2>Lights</h2>\n"
+#				
+#				if (what != "ALL"):
+#					cmd+=button("main.cgi", "light", "STATUS-LIGHT-ALL", "Update Light Status", "")
+#			
+#				cmd += "<table id=\"results\" >\n"
+#				cmd += "<tr> <th>Area</th> <th>Power</th> <th>Timer</th>  <th>State</th>"
+#				if (what != "ALL"):
+#					cmd += "<th colspan=\"5\">Controls </th>"
+#				cmd += "</tr>\n"
+#				
+#			
+#			for device in xrange(NUMBEROFZWAVEDEVICES):
+#
+#				if timerdata[device][ZWAVETYPE]=="LIGHT":
+#					
+#					# Do an actual read
+#					(timerdata[device][STATE],error) = zwave.get_node(timerdata[device][ZWAVEPORT], timerdata[device][ZWAVETYPE])
+#					
+#					# As Dimmers take a while to react, maybe tweak the power setting
+#					if timerdata[device][STATE]>0:
+#						timerdata[device][POWER]=1
+#					else:
+#						timerdata[device][POWER]=0
+#					
+#					cmd += "<tr>"
+#					cmd += "<td>"+timerdata[device][NAME]+"</td>"
+#					cmd += "<td>"+format_status(timerdata[device][POWER],format)+"</td>"
+#					cmd += "<td>"+format_status(timerdata[device][TIMER],format)+"</td>"
+#					#cmd += " Dimmer Control["+format_status(timerdata[device][DIMMERCONTROL],format)+"]"
+#								
+#					if zwave.isActive()!=True or zwave.isResponding()!=True:
+#						cmd += "<td>[UNKNOWN]</td>"
+#					else:
+#						cmd += "<td>"+format_status(timerdata[device][STATE],format)+"</td>"		
+#					
+#									
+#					if format=="html":
+#						if (what != "ALL"):
+##							# Power Button
+#							# ============
+#							if timerdata[device][POWER]==1:
+#								disabled=""
+#							else:
+#								disabled="Disabled"
+#							cmd += "<td>"+button("main.cgi", "light", "POWER-LIGHT-"+str(device), "Power Off", disabled)+"</td>"
+#							
+#							# Timer Button
+#							# ============
+#							if timerdata[device][TIMER]==0:
+#								label="On"
+#							else:
+#								label="Off"
+#							cmd += "<td>"+button("main.cgi", "light", "TIMER-LIGHT-"+str(device), "Timer "+label, "")+"</td>"
+#							
+#							# Dimmer Button
+#							# =============
+#							cmd += "<td>"+button("main.cgi", "light", "DIMMERUP-LIGHT-"+str(device), "Dimmer Up", "")+"</td>"
+#							cmd += "<td>"+button("main.cgi", "light", "DIMMERDOWN-LIGHT-"+str(device), "Dimmer Down", "")+"</td>"
+#							
+#							# Get Times Button
+#							# ================
+#							cmd += "<td>"+button("timer.jsp", "light", "GETTIMES-LIGHT-"+str(device), "Get Timer Values", timerdata[device][NAME] )+"</td>"
+##							cmd += "</tr>"
+#	#						
+#			cmd += "</table>"
+#					
 					
 			
 		
 			
-		# Gather Status for ALL Socket ZWAVE Devices
-		# ==========================================
-		if (what == "ALL") or (what == "SOCKET"):
-		
-			#cmd += "<hr>"
-			if format=="html":
-				cmd += "<h2>Sockets</h2>\n"
-				
-			if format=="html":
-				if (what != "ALL"):
-					cmd+=button("main.cgi", "socket", "STATUS-SOCKET-ALL", "Update Socket Status", "")
-			
-			cmd += "<table id=\"results\" >\n"
-			cmd += "<tr> <th>Area</th> <th>Power</th> <th>Timer</th>  <th>State</th>"
-			if (what != "ALL"):
-				cmd += "<th colspan=\"5\">Controls </th>"
-			cmd += "</tr>\n"
-							
-			for device in xrange(NUMBEROFZWAVEDEVICES):
-		
-				if timerdata[device][ZWAVETYPE]=="SOCKET":
-					cmd += "<td>"+timerdata[device][NAME]+"</td>"
-					cmd += "<td>"+format_status(timerdata[device][POWER],format)+"</td>"
-					cmd += "<td>"+format_status(timerdata[device][TIMER],format)+"</td>"
-			
-					# Do an actual read
-					(timerdata[device][STATE],error) = zwave.get_node(timerdata[device][ZWAVEPORT], timerdata[device][ZWAVETYPE])
-					
-					if zwave.isActive()!=True or zwave.isResponding()!=True:
-						cmd += "<td>State[UNKNOWN]</td>"
-					else:
-						cmd += "<td>State["+format_status(timerdata[device][STATE],format)+"</td>"
-					
-					
-					
-					if format=="html":
-						if (what != "ALL"):
-							cmd += "<td>"+button("main.cgi", "socket", "POWER-SOCKET-"+str(device), "Power", "")+"</td>"
-							cmd += "<td>"+button("main.cgi", "socket", "TIMER-SOCKET-"+str(device), "Timer", "")+"</td>"
-							cmd += "<td>"+button("timer.jsp", "socket", "GETTIMES-SOCKET-"+str(device), "Get Timer Values", timerdata[device][NAME] )+"</td>"
-				cmd += "</tr>"
-			
-			if format=="html":
-				cmd += "</table>"
-			
+
 		
 #		if what == "ALL":
 #			(batteryValue, batteryCharge, batteryText)=winstuff.getLaptopPower()
@@ -845,7 +676,8 @@ def status_string(what, format):
 	
 	debug.Info("--- status_string ---")
 	
-	cmd="Content-type: text/html\n\n<!DOCTYPE html><html><head><title>My first Python CGI app</title></head><body>"+cmd+"</body></html>"
+	##cmd="Content-type: text/html\n\n<!DOCTYPE html><html><head><title>My first Python CGI app</title></head><body>"+cmd+"</body></html>"
+	cmd="Content-type: text/html\n\n"+cmd
 	return cmd
 	
 		
@@ -1047,7 +879,7 @@ def get_timer_data(blob):
 		debug.Info("Command ["+str(cmd)+"] - Function ["+str(function)+"] - Device ["+str(device)+"] - Data ["+str(blob)+"] ")
 		
 		device=int(device)
-		data = "GETTIMES-HEATING-"+str(device)+"="
+		data = "GETTIMES-" + function + "-" + str(device)+"="
 		data = header = table = footer = ""
 
 		for x in range(0, 7):	
@@ -1097,9 +929,9 @@ def get_boost_data(blob):
 		debug.Info("Command ["+str(cmd)+"] - Function ["+str(function)+"] - Device ["+str(device)+"] - Data ["+str(blob)+"] ")
 		
 		device=int(device)
-		data = "GETBOOST-HEATING-"+str(device)+"="+str(timerdata[device][BOOSTLENGTH])	# - timerdata[device][BOOSTELAPSEDTIME]
-		
-		print "Data is ["+data+"]"
+		data = "GETBOOST-" + str(function) + "-"+str(device)+"="+str(timerdata[device][BOOSTLENGTH])	# - timerdata[device][BOOSTELAPSEDTIME]
+				
+		#print "Data is ["+data+"]"
 		
 
 	except Exception, e:
@@ -1134,11 +966,9 @@ def set_boost_data(blob):
 		
 		debug.Info("Command ["+str(cmd)+"] - Function ["+str(function)+"] - Device ["+str(device)+"] - Data ["+str(data)+"] ")
 		device=int(device)
-
 		
 		timerdata[device][BOOSTLENGTH] = int(data)
-		
-		
+			
 	except Exception, e:
 		debug.Info("EXCEPTION: Problem in set_boost_data. ["+str(e)+"]")
 		status = "ERROR"
@@ -1180,7 +1010,7 @@ def process_commands(data, needsms):
 	(cmd, product, node) = data.split("-")
 	debug.Info("    Command is     ["+cmd+"]")
 	debug.Info("    Product is     ["+product+"]")
-	debug.Info("    Node is        ["+node+"]")
+	debug.Info("    Data Node is   ["+node+"]")
 	
 	if node!="ALL":
 		node=int(node)
@@ -1238,12 +1068,14 @@ def process_commands(data, needsms):
 #						timerdata[node][STATE]=0
 						timerdata[node][BOOSTELAPSEDTIME]=0
 						timerdata[node][BOOSTSTARTTIME]=0
+						
 					# Else Boost ON
 					else:
 						timerdata[node][STATE]=1
 						timerdata[node][BOOST]=1
 						timerdata[node][POWER]=1 	# implied
 						timerdata[node][BOOSTSTARTTIME]=time.time()
+						
 	
 				if cmd=="TIMER":
 					debug.Info("Timer Command")
@@ -1289,29 +1121,35 @@ def process_commands(data, needsms):
 
 				# Sanity Check
 				# ============
-				for node in xrange(NUMBEROFZWAVEDEVICES):
+				for lnode in xrange(NUMBEROFZWAVEDEVICES):
+					
+					if timerdata[lnode][BOOST]==0 and timerdata[lnode][TIMER]==0:
+						timerdata[lnode][POWER]=0
+						timerdata[lnode][STATE]=0
+						timerdata[lnode][BOOSTELAPSEDTIME]=0
+						timerdata[lnode][BOOSTSTARTTIME]=0
+						print "a"
 
-					if timerdata[node][ZWAVETYPE]=="HEATING" and timerdata[node][BOOST]==0 and timerdata[node][TIMER]==0:
-						timerdata[node][POWER]=0
-						timerdata[node][STATE]=0
-						timerdata[node][BOOSTELAPSEDTIME]=0
-						timerdata[node][BOOSTSTARTTIME]=0
+					if timerdata[lnode][BOOST]==1:
+						timerdata[lnode][POWER]=1
+						print "B"
 
-					if timerdata[node][ZWAVETYPE]=="HEATING" and timerdata[node][BOOST]==1:
-						timerdata[node][POWER]=1
+					if timerdata[lnode][TIMER]==1:
+						timerdata[lnode][POWER]=1
+						print "c"
 
-					if timerdata[node][TIMER]==1:
-						timerdata[node][POWER]=1
-
-					if timerdata[node][ZWAVETYPE]=="LIGHT" and timerdata[node][TIMER]==0 and timerdata[node][STATE]==0:
-						timerdata[node][POWER]=0
-					if timerdata[node][ZWAVETYPE]=="LIGHT" and timerdata[node][STATE]>0:
-						timerdata[node][POWER]=1
+					if timerdata[lnode][TIMER]==0 and timerdata[lnode][STATE]==0:
+						timerdata[lnode][POWER]=0
+						print "d"
+					if timerdata[lnode][STATE]>0:
+						timerdata[lnode][POWER]=1
+						print "e"
 
 
 			
 				debug.Info("Look for a change in state")
 				if timerdata[node][OLDSTATE] != timerdata[node][STATE]:
+					print "DIFF"
 					error = zwave.set_node(timerdata[node][ZWAVEPORT], timerdata[node][ZWAVETYPE], timerdata[node][STATE])
 					#zerror(error)
 					if error == 0:
@@ -1476,6 +1314,12 @@ def process_any_zwave_commands():
 				process_commands('DIMMERSWITCH-LIGHT-'+str(device),0)
 
 
+				
+				
+				
+				
+				
+				
 ###############################################################################
 #def process_any_sms_commands():
 ###############################################################################
@@ -1689,7 +1533,7 @@ def test_harness():
 			
 			#check_to_restart_phone()
 			#check_to_restart_zwave()
-			check_laptop_power()
+			#check_laptop_power()
 		sys.exit(1)	
 
 
@@ -1976,7 +1820,7 @@ if __name__=='__main__':
 #		check_laptop_power()		
 		
 #		routine_check_on_phone()
-		routine_check_on_zwave()		
+#####		routine_check_on_zwave()		
 		
 #		send_daily_satus()
 #		
@@ -1996,3 +1840,148 @@ if __name__=='__main__':
 		
 	settings.save_settings(timerdata)
 
+
+	
+	
+	###############################################################################
+#def routine_check_on_phone():
+###############################################################################
+#
+#
+#
+###############################################################################
+#
+#	global phone
+#	global t
+#	
+#	debug=Debug()
+#	debug.Info1("+++	routine_check_on_phone +++")
+#	
+#	if phone.isActive() == True:
+#		if (t.second==15):
+#			debug.Info("Scheduled Check on Phone")
+#
+#			(batt,error) = phone.get_battery()
+#			#(signal,error) = phone.get_signal()
+#			#(imei,error) = phone.get_imei()
+#			
+#			#debug.Info("IMEI ["+str(imei)+"] - Battery ["+str(batt)+"] - Signal ["+str(signal)+"]")
+#			debug.Info ("Battery ["+str(batt)+"]")
+#	
+#	debug.Info1("--- routine_check_on_phone ---")
+#		
+
+
+
+###############################################################################
+#def check_to_restart_phone():
+###############################################################################
+#
+#
+#
+###############################################################################
+#
+#	global phone
+#	global t
+#	
+#	debug=Debug()
+#	debug.Info1("+++	check_to_restart_phone +++")
+#	
+#	# If no Phone, restart serial port
+#	# ======================================
+#	if phone.isActive() == False:
+#		if (t.second==5):
+#			debug.Info("Trying to restart phone")
+#			time.sleep(1)
+#			phone.init_phone()
+#			if phone.isResponding()==True:
+#				debug.Info("Restarted OK")
+#			else:
+#				debug.Info("Failed to restart")
+#
+#	debug.Info1("---	check_to_restart_phone ---")
+#
+
+
+
+###############################################################################
+#def status_string_sms():
+###############################################################################
+# Create general status string
+#
+# Returns SMS formatted status string
+#
+###############################################################################
+#
+#	global zwave
+#	global phone
+#	global sock
+#	global timerdata
+#
+#	debug=Debug()
+#	debug.Info("+++ status_string_sms +++")
+#
+#	cmd = ""
+#		
+#	# Get the time of day
+#	cmd += time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime()) + " "
+#		
+#	# ERRORS and WARNINGS
+#	# ===================
+#	if zwave.isActive() == False:
+#		cmd += "ERROR: Z-Wave not Active! "
+#	if phone.isActive() == False:
+#		cmd += "ERROR: Phone not Active! "
+#	if zwave.isResponding() == False:
+#		cmd += "WARNING: Z-Wave is not responding! "
+#	if phone.isResponding() == False:
+#		cmd += "WARNING: Phone is not responding! "
+#
+#
+#	for device in xrange(NUMBEROFZWAVEDEVICES):
+#		cmd += timerdata[device][NAME].upper()+" "
+#		cmd += "Power["+format_status(timerdata[device][POWER],"")+"] "
+#		cmd += "Timer["+format_status(timerdata[device][TIMER],"")+"] "
+#		cmd += "Boost["+format_status(timerdata[device][BOOST],"")+"] "
+#		cmd += "State["+format_status(timerdata[device][STATE],"")+"] "
+#
+#
+#	addr=sock.get_ip_address()
+#	if addr:
+#		cmd += str(" Server Address is http://"+addr+"/hc/index.jsp")
+#						
+#	debug.Info("--- status_string_sms ---")
+#	return cmd
+#	
+	
+	
+	
+# ###############################################################################
+# def check_laptop_power():		
+# ###############################################################################
+# #
+# #
+# #
+# ###############################################################################
+
+	# global batteryValue
+	# global batteryCharge
+	# global batteryText
+	# global batteryAlarm
+	# global batteryAlarmCutoff
+	
+	# global winstuff
+	
+	# debug=Debug()
+	# debug.Info1("+++ check_laptop_power +++")
+	
+	# # Check on Laptop Power
+	# # ======================
+	# (batteryValue, batteryCharge, batteryText)=winstuff.getLaptopPower()
+	# if batteryCharge < batteryAlarmCutoff:
+		# batteryAlarm=1
+	# else:
+		# batteryAlarm=0
+
+	# debug.Info1("--- check_laptop_power ---")
+	

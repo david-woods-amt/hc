@@ -107,12 +107,12 @@ class Zwave ():
 					error=-2
 					
 				if response and error==0:
-					debug.Info ("    Response is ["+hexlify(response)+"]")
+					debug.Info1 ("    Response is ["+hexlify(response)+"]")
 					if wait_for_string:
-						debug.Info ("    Waiting for ["+hexlify(wait_for_string)+"]")
+						debug.Info1 ("    Waiting for ["+hexlify(wait_for_string)+"]")
 						if response == wait_for_string:
 							response=0		
-							debug.Info ("    OK - Response found")
+							debug.Info1 ("    OK - Response found")
 						else:
 							response=1		
 							error=-1
@@ -176,14 +176,14 @@ class Zwave ():
 	###############################################################################
 	
 		debug=Debug()
-		debug.Info ("--- send_ack ---")	
+		debug.Info1 ("+++ send_ack +++")	
 		
 		cmd = "\x06"
 		error=1
 		
 		try:
 			if Zwave.__hZwave:
-				debug.Info ("    Sending ACK ["+hexlify(cmd)+"]")
+				debug.Info1 ("    Sending ACK ["+hexlify(cmd)+"]")
 				Zwave.__hZwave.write(cmd)
 				error=0
 			else:
@@ -192,7 +192,7 @@ class Zwave ():
 		except Exception, e:
 			debug.Exception ("Problem in sending ACK. ["+str(e)+"]")
 							
-		debug.Info ("--- send_ack ---")	
+		debug.Info1 ("--- send_ack ---")	
 		Zwave.__error(self, error)
 		return error
 	
@@ -278,7 +278,7 @@ class Zwave ():
 				winstuff=Winstuff()
 				usbport = winstuff.scan(Zwave.__WINDOWSNAME)
 			else:
-				usbport = "/dev/ttyUSB1"
+				usbport = "/dev/ttyUSB0"
 			
 			
 			if usbport != 0:
@@ -287,9 +287,9 @@ class Zwave ():
 					usbport = usbport - 1
 					
 				debug.Info ("    Opening COM Port ["+str(usbport)+"] for Z-Wave")
-				#Zwave.__hZwave = serial.Serial(usbport, baudrate=Zwave.__baud, timeout=Zwave.__porttimeout) 
+				Zwave.__hZwave = serial.Serial(usbport, baudrate=Zwave.__baud, timeout=Zwave.__porttimeout) 
 				#Zwave.__hZwave = serial.Serial(int("4"), baudrate=Zwave.__baud, timeout=Zwave.__porttimeout) 
-				ser = serial.Serial("COM4", 9600)
+				#ser = serial.Serial("COM4", 9600)
 	
 				if Zwave.__hZwave:
 					debug.Info ("    Port opened OK ["+str(Zwave.__hZwave)+"]")
@@ -325,7 +325,7 @@ class Zwave ():
 						j = 0
 						while j <= 7:
 							if (ord(buffer_index) & num > 0):
-								debug.Info ("    Node ["+str(index)+"] exists")
+								debug.Info ("    Z-Wave Node ["+str(index)+"] exists")
 							index = index+1
 							if j < 7:
 								num = num * 2
@@ -404,7 +404,7 @@ class Zwave ():
 		
 		debug=Debug()
 		debug.Info ("+++ get_node +++")
-		debug.Info ("    Getting Node ["+str(ord(node))+"]")
+		debug.Info ("    Getting Z-Wave Node ["+str(ord(node))+"]")
 		
 		error=-2
 		response=None
@@ -452,15 +452,15 @@ class Zwave ():
 					
 		
 			if Zwave.__hZwave:	
-				debug.Info ("    Create command")	
+				debug.Info1 ("    Create command")	
 				cmd="\x09\x00\x13"+node+"\x02"+tweak+"\x02\x05\x03"
 	
-				debug.Info ("    Add checksum")
+				debug.Info1 ("    Add checksum")
 				cmd = Zwave.__addChecksum(self, cmd)
 				cmd = "\x01"+cmd
 	
 				try:
-					debug.Info ("    Sending command ["+hexlify(cmd)+"]")
+					debug.Info1 ("    Sending command ["+hexlify(cmd)+"]")
 					Zwave.__hZwave.write(cmd)
 					error=0
 				except Exception, e:
@@ -468,32 +468,32 @@ class Zwave ():
 					error=-2
 	
 				if error == 0:
-					debug.Info ("    Wait #1")
+					debug.Info1 ("    Wait #1")
 					(response,error)=Zwave.__wait_for_ok_response(self, None)
-					debug.Info ("    Received    ["+hexlify(response)+"]")
+					debug.Info1 ("    Received    ["+hexlify(response)+"]")
 	
-					debug.Info ("    Send ACK #1")
+					debug.Info1 ("    Send ACK #1")
 					error=Zwave.__send_ack(self)
 	
-					debug.Info ("    Wait #2")
+					debug.Info1 ("    Wait #2")
 					(response,error)=Zwave.__wait_for_ok_response(self, None)
-					debug.Info ("    Received    ["+hexlify(response)+"]")
+					debug.Info1 ("    Received    ["+hexlify(response)+"]")
 	
-					debug.Info ("    Send ACK #2")
+					debug.Info1 ("    Send ACK #2")
 					error=Zwave.__send_ack(self)
 	
-					debug.Info ("    Wait #3")
+					debug.Info1 ("    Wait #3")
 					(response,error)=Zwave.__wait_for_ok_response(self, None)		# This is where the status lives
-					debug.Info ("    Response is ["+hexlify(response)+"]")
+					debug.Info1 ("    Response is ["+hexlify(response)+"]")
 	
-					debug.Info ("    Send ACK #3")
+					debug.Info1 ("    Send ACK #3")
 					error=Zwave.__send_ack(self)
 	
 				if response:
 					status = response[9]
-					debug.Info ("    HEX Status received ["+hexlify(status)+"]")
+					debug.Info1 ("    HEX Status received ["+hexlify(status)+"]")
 					
-					debug.Info ("    Convert it")
+					debug.Info1 ("    Convert it")
 					if (function=="SOCKET") or (function=="HEATING"):
 						if status == "\x00":
 							status=0
@@ -536,7 +536,7 @@ class Zwave ():
 
 		debug=Debug()
 		debug.Info ("+++ set_node +++")
-		debug.Info ("    Setting Node ["+str(ord(node))+"] of function ["+function+"] to ["+str(status)+"]")
+		debug.Info ("    Setting Z-Wave Node ["+str(ord(node))+"] of function ["+function+"] to ["+str(status)+"]")
 
 		error=-2
 
@@ -586,36 +586,36 @@ class Zwave ():
 
 
 
-				debug.Info ("    Create the command")	
+				debug.Info1 ("    Create the command")	
 				cmd="\x0a\x00\x13"+node+"\x03"+tweak+"\x01"+status+"\x05\x03"
 
-				debug.Info ("    Add checksum")
+				debug.Info1 ("    Add checksum")
 				cmd = Zwave.__addChecksum(self, cmd)
 				cmd = "\x01"+cmd
 
 				try:
-					debug.Info ("    Sending command ["+hexlify(cmd)+"]")
+					debug.Info1 ("    Sending command ["+hexlify(cmd)+"]")
 					Zwave.__hZwave.write(cmd)
 					error=0
 				except Exception, e:
-					debug.Info ("EXCEPTION: Problem in sending command ["+str(hexlify(cmd))+"]. ["+str(e)+"]")
+					debug.Info1 ("EXCEPTION: Problem in sending command ["+str(hexlify(cmd))+"]. ["+str(e)+"]")
 					error=-2
 
 
 				if error==0:	
-					debug.Info ("    Waiting #1")
+					debug.Info1 ("    Waiting #1")
 					(response,error)=Zwave.__wait_for_ok_response(self, "\x06\x01\x04\x01\x13\x01\xE8")
 
 				if error==0:	
-					debug.Info ("    Send ACK #1")
+					debug.Info1 ("    Send ACK #1")
 					error=Zwave.__send_ack(self)
 
 				if error==0:	
-					debug.Info ("    Waiting #2")
+					debug.Info1 ("    Waiting #2")
 					(response,error)=Zwave.__wait_for_ok_response(self, "\x01\x05\x00\x13\x03\x00\xEA")		
 
 				if error==0:	
-					debug.Info ("    Send ACK #2")
+					debug.Info1 ("    Send ACK #2")
 					error=Zwave.__send_ack(self)
 
 			else:
@@ -692,7 +692,7 @@ class Zwave ():
 
 							if Zwave.__send_command(self, cmd):
 								node=ord(node)
-								debug.Info ("Button pressed on node ["+str(node)+"]")
+								debug.Info ("Button pressed on Z-Wave node ["+str(node)+"]")
 							else:
 								debug.Info ("Problem in sending command")
 						else:

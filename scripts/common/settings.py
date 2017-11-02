@@ -24,7 +24,7 @@ class Settings ():
 	if isWin():
 		settingsfilename = "./settings.txt"
 	else:
-		settingsfilename = "/root/hc/settings.txt"
+		settingsfilename = "/root/hc/scripts/settings.txt"
 	
 
 	###############################################################################
