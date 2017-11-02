@@ -48,7 +48,7 @@ aI0
 aI0
 aI0
 aI0
-aI0
+aI1
 aa(lp3
 I0
 aI0
@@ -352,7 +352,7 @@ aI0
 aI0
 aI360
 aI0
-aI1
+aI0
 aI0
 aS'\x05'
 p10

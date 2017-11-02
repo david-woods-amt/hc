@@ -417,7 +417,7 @@ def status_string_helper(what, display, summary):
 	ret += "<br><table width=\"100%\" id=\"results\" >\n"
 	ret += "<tr> <th width=\"40%\" >Area</th> <th>Power</th> <th>Timer</th>  <th>Boost</th> <th>State</th>"
 	if (summary == 0):
-		ret += "<th colspan=\"3\">Controls </th>"
+		ret += "<th colspan=\"5\">Controls </th>"
 	ret += "</tr>\n"
 	
 	for device in xrange(NUMBEROFZWAVEDEVICES):
@@ -476,7 +476,13 @@ def status_string_helper(what, display, summary):
 						label="Off"
 					ret += TDC + button("main.cgi", what, "BOOST-" + what + "-" + str(device), "Boost "+label, "") + "</td>"
 				
-				
+				# Get Timer Button
+				ret += TDC + button("main.cgi", what, "GETTIMES-" + what + "-" + str(device), "Get Timer Values", timerdata[device][NAME] ) + "</td>"
+
+				if what == "HEATING" or what == "SOCKET":
+					# Get Boost Button
+					ret += TDC + button("main.cgi", what, "GETBOOST-" + what + "-" + str(device), "Get Boost Value", timerdata[device][NAME] ) + "</td>"
+			
 		ret += "</tr>"
 	ret += "</table>"
 	
@@ -487,12 +493,7 @@ def status_string_helper(what, display, summary):
 		ret += TDC + button("main.cgi", what, "STATUS-" + what + "-ALL", "Refresh Screen for " + what + " Status", "") + "</td>"
 		
 		
-		# Get Timer Button
-		ret += TDC + button("main.cgi", what, "GETTIMES-" + what + "-" + str(device), "Get Timer Values", timerdata[device][NAME] ) + "</td>"
-
-		if what == "HEATING" or what == "SOCKET":
-			# Get Boost Button
-			ret += TDC + button("main.cgi", what, "GETBOOST-" + what + "-" + str(device), "Get Boost Value", timerdata[device][NAME] ) + "</td>"
+		
 		ret += "</table>"
 
 	return ret
