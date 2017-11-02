@@ -412,7 +412,7 @@ def status_string_helper(what, display, summary):
 	ret=""
 	
 	if (summary == 1):
-		ret += "<br><a class=\"heading\" href=\"/cgi-bin/main.cgi?command=STATUS-"+ what +"-ALL\"> "+ display +" </a> <br>"
+		ret += "<br><a class=\"heading\" href=\"/cgi-bin/main.cgi?command=STATUS-"+ what +"-ALL\"> "+ display +" </a> <br>\n\n"
 	
 	ret += "<br><table width=\"100%\" id=\"results\" >\n"
 	ret += "<tr> <th width=\"40%\" >Area</th> <th>Power</th> <th>Timer</th>  <th>Boost</th> <th>State</th>"
@@ -542,7 +542,7 @@ def status_string(what, format):
 ###			cmd += "<b>WARNING: Phone is not responding...cannot process SMS! </b><br>"
 		if errors:
 			cmd += "<article>"		
-			cmd += errors
+			cmd += errors + "\n\n"
 			cmd += "</article>"
 
 		if (what == "ALL"):
