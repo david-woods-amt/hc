@@ -187,23 +187,6 @@ footer {
 //}
 
 
-/* CSS for Sortable Table */
-/* ====================== */
-table.tablesorter thead tr .header {
-  background-image: url(/webstuff/html/images/bg.png);
-  background-repeat: no-repeat;
-  background-position: center right;
-  cursor: pointer;
-}
-table.tablesorter thead tr .headerSortUp {
-  background-image: url(/webstuff/html/images/asc.png);
-}
-table.tablesorter thead tr .headerSortDown {
-  background-image: url(/webstuff/html/images/desc.png);
-}
-
-
-
 /* Style for Page Header */
 /* ===================== */
 h5 {
