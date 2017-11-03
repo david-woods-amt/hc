@@ -1,4 +1,6 @@
-#!perl
+#!/usr/bin/perl
+
+
 use POSIX;
 #########################################################################
 # Main Web Page script
@@ -6,6 +8,7 @@ use POSIX;
 # Handles all operations and posts commands to daemon
 #
 #########################################################################
+$|=1;
 
 
 # The Info passed to the script file
@@ -16,12 +19,17 @@ $line = $ENV{'QUERY_STRING'};
 # -----------------
 print "Content-Type: text/html\n\n";
 print"
-	<html>
+	<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+	<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en-US\"  c\ lang=\"en-US\">
+
+
 	<HEAD>
 		<title>Main Menu</title>
 		<META HTTP-EQUIV=\"Cache-Control\" CONTENT=\"no-cache\">
+		
 	</HEAD>
- 	
+  
+ 
 	<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\"/>
 	<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/font-awesome.min.css\"/>
 	
@@ -40,9 +48,9 @@ print"
 			<nav>
 				<ul>
 					<li><a href=\"/cgi-bin/main.cgi\"> 								<i class=\"fa fa-home\"></i>			&nbsp; Home </a></li>
-					<li><a href=\"/cgi-bin/main.cgi?command=STATUS-HEATING-1\"> 	<i class=\"fa fa-info\"></i>			&nbsp; Heating </a></li>
-					<li><a href=\"/cgi-bin/main.cgi?command=STATUS-LIGHT-1\"> 		<i class=\"fa fa fa-text-height\"></i> 	&nbsp; Lights </a></li>
-					<li><a href=\"/cgi-bin/main.cgi?command=STATUS-SOCKET-1\"> 		<i class=\"fa fa fa-text-height\"></i> 	&nbsp; Sockets </a></li>
+					<li><a href=\"/cgi-bin/main.cgi?command=STATUS-HEATING-ALL\"> 	<i class=\"fa fa-fire\"></i>			&nbsp; Heating </a></li>
+					<li><a href=\"/cgi-bin/main.cgi?command=STATUS-SOCKET-ALL\"> 	<i class=\"fa fa-plug\"></i> 	&nbsp; Sockets </a></li>
+					<li><a href=\"/cgi-bin/main.cgi?command=STATUS-LIGHT-ALL\"> 	<i class=\"fa fa-lightbulb-o\"></i> 	&nbsp; Lights </a></li>
 				</ul>
 			</nav>
 			
@@ -76,60 +84,73 @@ while ($options[$x])
 } 
 if ( $found == 0 )
 {
-	if ($line =~ m/SETTIMES-HEATING-0/) 
-	{
-		$command="SETTIMES-HEATING-0";
-	}
-	elsif ($line =~ m/SETBOOST-HEATING-0/) 
-	{
-		$command="SETBOOST-HEATING-0";
-	}
-	else
-	{
+	# if ($line =~ m/SETTIMES-HEATING-0/) 
+	# {
+		# $command="SETTIMES-HEATING-0";
+	# }
+	# elsif ($line =~ m/SETBOOST-HEATING-0/) 
+	# {
+		# $command="SETBOOST-HEATING-0";
+	# }
+	# else
+	# {
 		$command="STATUS-ALL-1";
-	}
-}
+	# }
+ }
 
-#print "<hr><p>Command is [".$command."]</p><hr>";
-
-
+##print "<hr><p>Command is [".$command."]</p><hr>";
 
 
+
+#########################################################################################################
+# Handle commands
+#########################################################################################################
 
 # If getting BOOST Info - Set the Boost length
 # ---------------------
-if ($command eq "GETBOOST-HEATING-0" )
+#if ($command eq "GETBOOST-HEATING-0" )
+if ( index($command, "GETBOOST") == 0 )
 {
 	$done=1;
 	$mins=0;
 	
+	($function, $type, $node) = split(/-/, $command);
+	
 	$res= `perl ./post.cgi "$command"`;
 	#print $res;
 	
-	$res =~ s/GETBOOST-HEATING-0=//g;
+	$res =~ s/GETBOOST-$type-$node=//g;
 	$mins=$res / 60;
 
 	print "
 	<form action=\"main.cgi\">
 		Boost Value <input size=\"6\" type=\"text\" name=\"boostvalue\" value=\"$mins\"> Minutes
-		<br>
-		<input type=\"submit\" value=\"Submit\" name=\"SETBOOST-HEATING-0\"> </form> </p> \n
+		<br><br>
+		<input type=\"hidden\" name=\"command\" value=\"SETBOOST-$type-$node\">
+		<input type=\"submit\" class=\"button\" name=\"Submit\" value=\"Save $type $node Settings\">	
+			
 	</form>
 	";
+	
+	#<input type=\"submit\" value=\"Submit\" name=\"SETBOOST-$type-$node\"> </form> </p> \n
+	
 }
 
 
 # If setting BOOST Info
 # ---------------------
-if ($command eq "SETBOOST-HEATING-0" )
+#if ($command eq "SETBOOST-HEATING-0" )
+if ( index($command, "SETBOOST") == 0 )
 {
 	#print "SETBOOST-HEATING-0 <br>";
 	
 	$done=1;
 	$secs=0;
+	
+	($function, $type, $node) = split(/-/, $command);
 			
 	$line =~ s/boostvalue=//g;
-	$line =~ s/&SETBOOST-HEATING-0=Submit//g;
+	$line =~ s/&command=SETBOOST-$type-$node&Submit=Save\+$type\+$node\+Settings//g;
 	
 	if ( ($line > 0) && ($line <= 120) )   
 	{
@@ -151,17 +172,14 @@ if ($command eq "SETBOOST-HEATING-0" )
 
 
 
-
-
-
-
-
-
 # If a set heating command, set the values
 # ----------------------------------------
-if ($command eq "SETTIMES-HEATING-0" )
+#if ($command eq "SETTIMES-HEATING-0" )
+if ( index($command, "SETTIMES") == 0 )
 {
 	$done=1;
+	
+	($function, $type, $node) = split(/-/, $command);
 	
 	##print "Before $line <br>";
 
@@ -169,7 +187,7 @@ if ($command eq "SETTIMES-HEATING-0" )
 	$line =~ s/-/&/g;
 	$line =~ s/,B1=Submit//g;
 
-	$line="SETTIMES-HEATING-0-".$line;
+	$line="SETTIMES-$type-$node-".$line;
 
 	$res= `perl ./post.cgi "$line"`;
 
@@ -178,29 +196,31 @@ if ($command eq "SETTIMES-HEATING-0" )
 
 	# Set the GET command to force a reload of the settings
 	# -----------------------------------------------------
-	$command = "GETTIMES-HEATING-0";
+	$command = "GETTIMES-$type-$node";
 
 }
 
 
 
-
-
 # If a get heating command, display the table - Make sure this is always coded after the SET operation
 # -------------------------------------------
-if ($command eq "GETTIMES-HEATING-0" )
+#elsif ($command eq "GETTIMES-HEATING-0" )
+if ( index($command, "GETTIMES") == 0 )
 {
 	$done=1;
 	
-	$res= `perl ./post.cgi "GETTIMES-HEATING-0"`;
+	($function, $type, $node) = split(/-/, $command);
+	
+	print "<h3>Timer for [$type] [$node]</h3>";
+	
+	$res= `perl ./post.cgi "GETTIMES-$type-$node"`;
+	
 	
 	###print $res;
 	
 	@options = split(/&/, $res);
 	
 	print "<form method=\"run\" action=\"main.cgi\">\n";
-	
-#	print "<input type=\"submit\" value=\"Submit\" name=\"SETTIMES-HEATING-0\"> </form> </p> \n";
 	
 	print "<table id=\"results\" border=\"1\">";
 	
@@ -236,13 +256,14 @@ if ($command eq "GETTIMES-HEATING-0" )
 	    }
 	    print "</tr>\n";
 	}
-	print "</table>";
+	print "</table><br><br>";
 	
-	print "<input type=\"submit\" value=\"Submit\" name=\"SETTIMES-HEATING-0\"> </form> </p> \n";
-	
+	print "<input type=\"hidden\" name=\"command\" value=\"SETTIMES-$type-$node\">";
+	print "<input type=\"submit\" class=\"button\" name=\"Submit\" value=\"Save $type $node Settings\">";
+
+	print "</form> </p> \n";
+
 }
-
-
 
 
 
@@ -254,6 +275,7 @@ if ($done == 0 )
 {
 	$res= `perl ./post.cgi "$command"`;
 	print $res;
+	##print "Command [$command] not handled"
 }
 
 
