@@ -1,0 +1,29 @@
+#!/bin/bash
+
+case "$1" in 
+start)
+   cd /root/hc/scripts/
+   /usr/bin/python ./control.py &
+   echo $!>/var/run/hc.pid
+   ;;
+stop)
+   kill `cat /var/run/hc.pid`
+   rm /var/run/hc.pid
+   ;;
+restart)
+   $0 stop
+   $0 start
+   ;;
+status)
+   if [ -e /var/run/hc.pid ]; then
+      echo Home Control is running, pid=`cat /var/run/hc.pid`
+   else
+      echo Home Control is NOT running
+      exit 1
+   fi
+   ;;
+*)
+   echo "Usage: $0 {start|stop|status|restart}"
+esac
+
+exit 0 
